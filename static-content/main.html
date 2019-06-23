@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Tambird</title>
   <meta charset="utf-8">
@@ -8,10 +9,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script language="javascript" src="main.js" > </script>
+  <script language="javascript" src="main.js"> </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTYvM9LbhP3OQLyC6WdeNH5jXNuS0nPcA&callback=initMap"
+    type="text/javascript"></script>
+  <style>
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
+  </style>
 </head>
-<body>
 
+<body>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -20,8 +33,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-         <a href="#" class="pull-left"><img style="max-width:30px; margin-top: 10px;"
-             src="../images/icons/favicon.png"></a>
+        <a href="#" class="pull-left"><img style="max-width:30px; margin-top: 10px;"
+            src="../images/icons/favicon.png"></a>
         <a class="navbar-brand" href="#">&nbspTambird</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
@@ -36,42 +49,80 @@
   </nav>
 
 
-<div id="info"></div>
+  <div id="map"></div>
+  <script>
+    // Initialize and add the map
+    function initMap() {
+      // The location of Uluru
+      var uluru = { lat: 43.658262, lng: -79.379761 };
+      var ruluru = { lat: 43.658634, lng: -79.379649 };
+      var vuluru = { lat: 43.658712, lng: -79.379422 };
+      // The map, centered at Uluru
+      var map = new google.maps.Map(
+        document.getElementById('map'), { zoom: 17, center: uluru });
+      // The marker, positioned at Uluru
+      var marker = new google.maps.Marker({ position: uluru, map: map, title: 'Sally' });
+      var marker2 = new google.maps.Marker({ position: ruluru, map: map, title: 'Harpreet' });
+      var marker3 = new google.maps.Marker({ position: vuluru, map: map, title: 'Mercedes' });
+      marker.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Sally: 13 pads available'
+        }).open(map, marker);
+      })
+
+      marker2.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Harpreet: 2 pads available'
+        }).open(map, marker2);
+      })
+
+      marker3.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Mercedes: 8842 pads available'
+        }).open(map, marker3);
+      })
+
+    }
+  </script>
 
 
+  <div id="info"></div>
 
 <div class="container">
 <div id="otherusers"></div>
 </div>
 
 
-<div class="container">
-  <form>
-    <div class="row">
-      <div class="col">
-        <input type="text" class="form-control" id="userfname" value="" placeholder="First name">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" id="userlname" placeholder="Last name">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" id="useremail" placeholder="Last name" disabled>
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" id="userusername" placeholder="Last name">
-      </div>
 
-    </div>
-  </form>
-<h1>Your Balance For Rewards  </h1>
-<h2> $10* </h2>
+
+  <div class="container">
+    <form>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" id="userfname" value="" placeholder="First name">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="userlname" placeholder="Last name">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="useremail" placeholder="Last name" disabled>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="userusername" placeholder="Last name">
+        </div>
+
+      </div>
+    </form>
+    <h1>Your Balance For Rewards </h1>
+    <h2> $10* </h2>
     <br>
 
-<p>scan barcode at store to redeem </p>
-<img src="./images/barcode.png" class="rounded mx-auto d-block" alt="..."><s></s>
+    <p>scan barcode at store to redeem </p>
+    <img src="./images/barcode.png" class="rounded mx-auto d-block" alt="..."><s></s>
 
-</div>
+  </div>
 
 
 </body>
+
 </html>
