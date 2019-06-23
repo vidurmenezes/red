@@ -53,12 +53,34 @@
     // Initialize and add the map
     function initMap() {
       // The location of Uluru
-      var uluru = { lat: -25.344, lng: 131.036 };
+      var uluru = { lat: 43.658262, lng: -79.379761 };
+      var ruluru = { lat: 43.658634, lng: -79.379649 };
+      var vuluru = { lat: 43.658712, lng: -79.379422 };
       // The map, centered at Uluru
       var map = new google.maps.Map(
-        document.getElementById('map'), { zoom: 4, center: uluru });
+        document.getElementById('map'), { zoom: 17, center: uluru });
       // The marker, positioned at Uluru
-      var marker = new google.maps.Marker({ position: uluru, map: map });
+      var marker = new google.maps.Marker({ position: uluru, map: map, title: 'Sally' });
+      var marker2 = new google.maps.Marker({ position: ruluru, map: map, title: 'Harpreet' });
+      var marker3 = new google.maps.Marker({ position: vuluru, map: map, title: 'Mercedes' });
+      marker.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Sally: 13 pads available'
+        }).open(map, marker);
+      })
+      
+      marker2.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Harpreet: 2 pads available'
+        }).open(map, marker2);
+      })
+
+      marker3.addListener('click', function() {
+        new google.maps.InfoWindow({
+          content: 'Mercedes: 8842 pads available'
+        }).open(map, marker3);
+      })
+      
     }
   </script>
 
