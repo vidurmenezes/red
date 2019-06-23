@@ -20,7 +20,7 @@ var db = new sqlite3.Database('./db/database.db', (err) => {
 });
 
 db.run("CREATE table if not exists users (username VARCHAR(20) PRIMARY KEY,password VARCHAR(100))");
-db.run("CREATE table if not exists userinfo(username VARCHAR(20) not null,fname CHAR(100) not null,lname char(100) not null,email char(100) not null,PRIMARY key(username,email),foreign KEY (username) references users(username) ON DELETE CASCADE);");
+db.run("CREATE table if not exists userinfo(username VARCHAR(20) not null,fname CHAR(100) not null,lname char(100) not null,email char(100) not null,number int(100) not null,PRIMARY key(username,email),foreign KEY (username) references users(username) ON DELETE CASCADE);");
 
 app.get('/api/getList', (req,res) => {
     var list = ["item1", "item2", "item3"];
@@ -34,9 +34,9 @@ app.get('/getuser/:username/',ensureToken, function (req, res) {
 			res.sendStatus(403);
 		}
 		else{
-			//console.log("reached here");
+			console.log("reached here");
 			var username = req.params.username;
-	//console.log(username);
+	console.log(username);
 
 		// http://www.sqlitetutorial.net/sqlite-nodejs/query/
 		let sql = 'SELECT * FROM userinfo WHERE username=?';
@@ -46,12 +46,47 @@ app.get('/getuser/:username/',ensureToken, function (req, res) {
 				// Should set res.status!!
 	    			result["error"] = err.message;
 	  		} else {
-	  			//console.log(row);
+	  			console.log(row);
 	  			result["username"] = row;
 				/*rows.forEach((row) => {
 					result["username"].push(row);
 				});*/
 			}
+			res.json(result);
+		});
+
+		}
+	});
+	// http://www.sqlitetutorial.net/sqlite-nodejs/query/
+
+});
+
+app.get('/getotheruser/:username/',ensureToken, function (req, res) {
+
+	jwt.verify(req.token,'secretkey',function(err,data){
+		if(err){
+			res.sendStatus(403);
+		}
+		else{
+			//console.log("reached here");
+			var username = req.params.username;
+	//console.log(username);
+
+		// http://www.sqlitetutorial.net/sqlite-nodejs/query/
+		let sql = 'SELECT * FROM userinfo';
+		db.all(sql, (err, rows) => {
+			var result = {};
+			result["username"] = [];
+	  		if (err) {
+				// Should set res.status!!
+	    			result["error"] = err.message;
+	  		} else {
+	  		console.log(rows);
+				rows.forEach((row) => {
+				result["username"].push(row);
+				});
+			}
+			//console.log(result);
 			res.json(result);
 		});
 
@@ -68,6 +103,8 @@ app.post('/api/register',function(req,res){
 	var email = req.body.email;
 	var fname = req.body.fname;
 	var lname = req.body.lname;
+	var number = req.body.number;
+	console.log(number);
 
 	var result = {};
 	if(password == password2){
@@ -83,8 +120,8 @@ app.post('/api/register',function(req,res){
     				result["error"] = "Not Inserted";
 				    res.status(404);
 			} else {
-				let sql = 'Insert into userinfo(username,fname,lname,email) values (?,?,?,?);';
-				db.run(sql, [username,fname,lname,email], function (err){
+				let sql = 'Insert into userinfo(username,fname,lname,email,number) values (?,?,?,?,?);';
+				db.run(sql, [username,fname,lname,email,number], function (err){
 					if(err){
 						res.status(404);
     					result["error"] = err.message;
