@@ -121,39 +121,6 @@ app.post('/api/login/',function (req, res) {
 
 });
 
-app.get('/getuser/:username/',ensureToken, function (req, res) {
-
-	jwt.verify(req.token,'secretkey',function(err,data){
-		if(err){
-			res.sendStatus(403);
-		}
-		else{
-			//console.log("reached here");
-			var username = req.params.username;
-	//console.log(username);
-
-		// http://www.sqlitetutorial.net/sqlite-nodejs/query/
-		let sql = 'SELECT * FROM userinfo WHERE username=?';
-		db.get(sql, [username], (err, row) => {
-			var result = {};
-	  		if (err) {
-				// Should set res.status!!
-	    			result["error"] = err.message;
-	  		} else {
-	  			//console.log(row);
-	  			result["username"] = row;
-				/*rows.forEach((row) => {
-					result["username"].push(row);
-				});*/
-			}
-			res.json(result);
-		});
-
-		}
-	});
-	// http://www.sqlitetutorial.net/sqlite-nodejs/query/
-
-});
 
 
 var server = app.listen(8081, function () {
