@@ -36,6 +36,28 @@ function register(){
 
 }
 
+function getuserinfo(){
+  $.ajax({
+	  url: "/getuser/"+getCookie("username"),
+	  type: 'GET',// Fetch the stored token from localStorage and set in the header
+	  headers: {'authorization': 'Bearer '+getCookie("token")}
+	}).done(function(data){
+		var values="";
+		console.log(data["username"]);
+		values += "<table> <tr> <th>Username</th><th> First Name </th> <th> Last name </th><th> Email </th></tr><tr> "
+		values += "<tr><td>"+data["username"].username+
+			"</td><td> "+data["username"].fname +
+			"</td><td>"+data["username"].lname +
+			"</td><td> "+data["username"].email + "</td></tr>";
+		values+="</table>"
+		console.log(values);
+    $("#userfname").val("First Name:" + data["username"].fname);
+    $("#userlname").val(data["username"].lname);
+    $("#useremail").val("Email: " + data["username"].email);
+    $("#userusername").val(data["username"].username)
+		$("#info").html(values);
+	});
+}
 function getUser(){
 
 	$.ajax({
@@ -119,12 +141,15 @@ $(function(){
 	//if cookie exist
 		// showmain page
 
-	if(checkCookie() == "loggedin" && window.location.href != "http://localhost:8081/main.html"){
+	if(checkCookie() == "loggedin" && window.location.pathname != "/main.html"){
     console.log("logged in ");
-    window.location.href = 'http://localhost:8081/main.html';
+    window.location.href = '/main.html';
 	}
-  else if(window.location.href == "http://localhost:8081/main.html" && checkCookie() == "login"){
-      window.location.href = 'http://localhost:8081/login.html';
+  else if(window.location.pathname == "/main.html" && checkCookie() == "login"){
+      window.location.href = '/login.html';
+  }
+  else if(checkCookie()=="loggedin" && window.location.pathname == "/main.html"){
+    getuserinfo();
   }
 	else{
 

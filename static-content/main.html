@@ -9,11 +9,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script language="javascript" src="main.js" > </script>
-  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
- <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
- type="text/javascript" charset="utf-8"></script>
- <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
- type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 
@@ -39,29 +34,44 @@
       </div>
     </div>
   </nav>
-<div style="width: 640px; height: 480px" id="mapContainer"></div>
+
+<a href="tel:123-456-7890">123-456-7890</a>
+
+<div id="info"></div>
+
+
+
+
+
+
+
 <div class="container">
-  <h3>Right Aligned Navbar</h3>
-  <p>The .navbar-right class is used to right-align navigation bar buttons.</p>
+  <form>
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="userfname" value="" placeholder="First name">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="userlname" placeholder="Last name">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="useremail" placeholder="Last name" disabled>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="userusername" placeholder="Last name">
+      </div>
+
+    </div>
+  </form>
+<h1>Your Balance For Rewards  </h1>
+<h2> $10* </h2>
+    <br>
+
+<p>scan barcode at store to redeem </p>
+<img src="./images/barcode.png" class="rounded mx-auto d-block" alt="..."><s></s>
+
 </div>
-<script>
-    // Initialize the platform object:
-    var platform = new H.service.Platform({
-    'app_id': 'M4nlAHcDat9oqZmfH7at',
-    'app_code': 'ZaolraJC8XJTa47fzR0ENg'
-    });
 
-    // Obtain the default map types from the platform object
-    var maptypes = platform.createDefaultLayers();
 
-    // Instantiate (and display) a map object:
-    var map = new H.Map(
-    document.getElementById('mapContainer'),
-    maptypes.normal.map,
-    {
-      zoom: 10,
-      center: { lng: 13.4, lat: 52.51 }
-    });
-  </script>
 </body>
 </html>

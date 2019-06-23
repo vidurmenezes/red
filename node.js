@@ -27,6 +27,40 @@ app.get('/api/getList', (req,res) => {
     res.json(list);
 });
 
+app.get('/getuser/:username/',ensureToken, function (req, res) {
+
+	jwt.verify(req.token,'secretkey',function(err,data){
+		if(err){
+			res.sendStatus(403);
+		}
+		else{
+			//console.log("reached here");
+			var username = req.params.username;
+	//console.log(username);
+
+		// http://www.sqlitetutorial.net/sqlite-nodejs/query/
+		let sql = 'SELECT * FROM userinfo WHERE username=?';
+		db.get(sql, [username], (err, row) => {
+			var result = {};
+	  		if (err) {
+				// Should set res.status!!
+	    			result["error"] = err.message;
+	  		} else {
+	  			//console.log(row);
+	  			result["username"] = row;
+				/*rows.forEach((row) => {
+					result["username"].push(row);
+				});*/
+			}
+			res.json(result);
+		});
+
+		}
+	});
+	// http://www.sqlitetutorial.net/sqlite-nodejs/query/
+
+});
+
 app.post('/api/register',function(req,res){
 	var username = req.body.username;
 	var password = req.body.password;
@@ -121,9 +155,21 @@ app.post('/api/login/',function (req, res) {
 
 });
 
+function ensureToken(req,res,next){
+	const bearerHeader=req.headers["authorization"];
+	if(typeof bearerHeader !== 'undefined'){
+		const bearer = bearerHeader.split(" ");
+		const bearerToken = bearer[1];
+		req.token = bearerToken;
+		next();
+	}
+	else{
+		res.sendStatus(403);
+	}
+}
 
-
-var server = app.listen(8081, function () {
+//,'192.168.43.89'
+var server = app.listen(8081,function () {
    var port = server.address().port
    console.log("Example app listening at http://localhost:", port)
 })
