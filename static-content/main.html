@@ -48,6 +48,7 @@
     </div>
   </nav>
 
+
   <div id="map"></div>
   <script>
     // Initialize and add the map
@@ -56,41 +57,48 @@
       var uluru = { lat: 43.658262, lng: -79.379761 };
       var ruluru = { lat: 43.658634, lng: -79.379649 };
       var vuluru = { lat: 43.658712, lng: -79.379422 };
+      var xul = { lat: 43.658458, lng: -79.378923 };
+
       // The map, centered at Uluru
       var map = new google.maps.Map(
-        document.getElementById('map'), { zoom: 17, center: uluru });
+        document.getElementById('map'), { zoom: 17.5, center: uluru });
       // The marker, positioned at Uluru
       var marker = new google.maps.Marker({ position: uluru, map: map, title: 'Sally' });
       var marker2 = new google.maps.Marker({ position: ruluru, map: map, title: 'Harpreet' });
       var marker3 = new google.maps.Marker({ position: vuluru, map: map, title: 'Mercedes' });
-      marker.addListener('click', function() {
+      var marker4 = new google.maps.Marker({ position: xul, map: map, title: 'Bobby' });
+      marker.addListener('click', function () {
         new google.maps.InfoWindow({
           content: 'Sally: 13 pads available'
         }).open(map, marker);
       })
-      
-      marker2.addListener('click', function() {
+
+      marker2.addListener('click', function () {
         new google.maps.InfoWindow({
           content: 'Harpreet: 2 pads available'
         }).open(map, marker2);
       })
 
-      marker3.addListener('click', function() {
+      marker3.addListener('click', function () {
         new google.maps.InfoWindow({
           content: 'Mercedes: 8842 pads available'
         }).open(map, marker3);
       })
-      
+
+      marker4.addListener('click', function () {
+        new google.maps.InfoWindow({
+          content: 'Bobby: 11 pads available | TRANS'
+        }).open(map, marker4);
+      })
     }
   </script>
 
-  
-  <a href="tel:123-456-7890">123-456-7890</a>
 
   <div id="info"></div>
 
-
-
+  <div class="container">
+    <div id="otherusers"></div>
+  </div>
 
 
 
@@ -99,16 +107,16 @@
     <form>
       <div class="row">
         <div class="col">
-          <input type="text" class="form-control" id="userfname" value="" placeholder="First name">
+          <input type="text" class="form-control" id="userfname" value="" placeholder="First name" disabled>
         </div>
         <div class="col">
-          <input type="text" class="form-control" id="userlname" placeholder="Last name">
+          <input type="text" class="form-control" id="userlname" placeholder="Last name" disabled>
         </div>
         <div class="col">
           <input type="text" class="form-control" id="useremail" placeholder="Last name" disabled>
         </div>
         <div class="col">
-          <input type="text" class="form-control" id="userusername" placeholder="Last name">
+          <input type="text" class="form-control" id="userusername" placeholder="Last name" disabled>
         </div>
 
       </div>

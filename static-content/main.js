@@ -19,7 +19,7 @@ function login(){
 }
 
 function register(){
-  alert($("#fname").val());
+  alert($("#number").val());
 	$.ajax({
 		method: "POST",
 		url: "/api/register",
@@ -28,7 +28,8 @@ function register(){
 		password2:$('#passwordregister2').val(),
 		fname:$("#fname").val(),
 		lname:$("#lname").val(),
-		email:$("#email").val()},
+		email:$("#email").val(),
+    number:$("#number").val()},
 		error: function(data){alert("passwords are not the same");}
 	}).done(function(data){
     window.location.href = '/login.html';
@@ -50,33 +51,49 @@ function getuserinfo(){
 			"</td><td>"+data["username"].lname +
 			"</td><td> "+data["username"].email + "</td></tr>";
 		values+="</table>"
-		console.log(values);
+
     $("#userfname").val("First Name:" + data["username"].fname);
     $("#userlname").val(data["username"].lname);
     $("#useremail").val("Email: " + data["username"].email);
     $("#userusername").val(data["username"].username)
-		$("#info").html(values);
 	});
 }
-function getUser(){
 
-	$.ajax({
-	  url: "/getuser/"+getCookie("username"),
+function getotheruserinfo(){
+  $.ajax({
+	  url: "/getotheruser/"+getCookie("username"),
 	  type: 'GET',// Fetch the stored token from localStorage and set in the header
 	  headers: {'authorization': 'Bearer '+getCookie("token")}
 	}).done(function(data){
-		var values="";
 		console.log(data["username"]);
-		values += "<table> <tr> <th>Username</th><th> First Name </th> <th> Last name </th><th> Email </th></tr><tr> "
+  var values="";
+	  /*	values += "<table> <tr><th>Username</th><th>&nbspFirst Name </th><th>&nbsp Last Name </th><th>&nbsp Phone Number </th></tr>"
+
+		for(i=0;i<data["username"].length;i++){
+			values += "<tr><td>"+data["username"][i].username+" </td><td>"+data["username"][i].fname +"</td><td>"+data["username"][i].lname +"</td><td>"+data["username"][i].number +"</td></tr>";
+		}
+		values+="</table>";*/
+    for(i=0;i<data["username"].length;i++){
+    values += "<h2>"+data["username"][i].fname+" "+data["username"][i].lname+"<br><button type='button' class='btn btn-primary'><a style='color:white;' href=sms:"+ data["username"][i].number+">"+data["username"][i].number+"</a></button><br>"
+
+    }
+    $("#otherusers").html(values);
+		console.log(values);
+	/*	values += "<table> <tr> <th>Username</th><th> First Name </th> <th> Last name </th><th> Email </th></tr><tr> "
 		values += "<tr><td>"+data["username"].username+
 			"</td><td> "+data["username"].fname +
 			"</td><td>"+data["username"].lname +
 			"</td><td> "+data["username"].email + "</td></tr>";
 		values+="</table>"
 		console.log(values);
-		$("#info").html(values);
+    $("#userfname").val("First Name:" + data["username"].fname);
+    $("#userlname").val(data["username"].lname);
+    $("#useremail").val("Email: " + data["username"].email);
+    $("#userusername").val(data["username"].username)
+		$("#info").html(values);*/
 	});
 }
+
 
 function getCookie(name) {
   var value = "; " + document.cookie;
@@ -149,6 +166,7 @@ $(function(){
       window.location.href = '/login.html';
   }
   else if(checkCookie()=="loggedin" && window.location.pathname == "/main.html"){
+    getotheruserinfo();
     getuserinfo();
   }
 	else{
