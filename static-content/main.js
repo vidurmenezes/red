@@ -50,12 +50,12 @@ function getuserinfo(){
 			"</td><td> "+data["username"].fname +
 			"</td><td>"+data["username"].lname +
 			"</td><td> "+data["username"].email + "</td></tr>";
-		values+="</table>"
-
+		values+="</table>";
+    $("#userusername").val("Username: " +data["username"].username);
     $("#userfname").val("First Name:" + data["username"].fname);
-    $("#userlname").val(data["username"].lname);
+    $("#userlname").val("Last Name: " + data["username"].lname);
     $("#useremail").val("Email: " + data["username"].email);
-    $("#userusername").val(data["username"].username)
+    $("#usernumber").val("PhoneNumber: " + data["username"].number);
 	});
 }
 
@@ -74,7 +74,7 @@ function getotheruserinfo(){
 		}
 		values+="</table>";*/
     for(i=0;i<data["username"].length;i++){
-    values += "<h2>"+data["username"][i].fname+" "+data["username"][i].lname+"<br><button type='button' class='btn btn-primary'><a style='color:white;' href=sms:"+ data["username"][i].number+">"+data["username"][i].number+"</a></button><br>"
+    values += "<h3>"+data["username"][i].fname+" "+data["username"][i].lname+" &nbsp <button type='button' class='btn btn-primary'><a style='color:white;' href=sms:"+ data["username"][i].number+">"+data["username"][i].number+"</a></button><br>"
 
     }
     $("#otherusers").html(values);
