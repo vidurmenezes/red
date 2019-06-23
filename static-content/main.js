@@ -118,11 +118,12 @@ $(function(){
   var test = 1;
 	//if cookie exist
 		// showmain page
+
 	if(checkCookie() == "loggedin" && window.location.href != "http://localhost:8081/main.html"){
     console.log("logged in ");
     window.location.href = 'http://localhost:8081/main.html';
 	}
-  if(window.location.href == "http://localhost:8081/main.html" && checkCookie() == "login"){
+  else if(window.location.href == "http://localhost:8081/main.html" && checkCookie() == "login"){
       window.location.href = 'http://localhost:8081/login.html';
   }
 	else{
